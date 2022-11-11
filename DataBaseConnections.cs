@@ -4,7 +4,7 @@ using MySqlConnector;
 public class DataBaseConnections
 {
 
-    private string connectionstring = "Server=localhost;Database=eatm;Uid=Fredrik;Pwd=123;";
+    private string connectionstring = "Server=localhost;Database=eatm;Uid=eatm;Pwd=;";
     public MySqlConnection connection;
     public DataBaseConnections()
     {
