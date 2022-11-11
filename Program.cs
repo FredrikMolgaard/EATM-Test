@@ -3,26 +3,25 @@ using MySqlConnector;
 
 internal class Program
 {
-    public static string sqlString = "Server=localhost;Database=eatm;Uid=Fredrik;Pwd=123;";
     private static void Main(string[] args)
     {
 
-        void ValidateCustomer()
+        DataBaseConnections db = new();
+
+        Console.WriteLine("Skriv in ID: ");
+        string search = Console.ReadLine();
+
+        var searchResult = db.connection.Query<Customer>($"SELECT ID, name, addres, social_security_number FROM Customer WHERE ID='{search}'");
+
+        foreach (Customer c in searchResult)
         {
-            using (var connection = new MySqlConnection(sqlString))
+            if (Convert.ToString(c.Id).Contains(search))
             {
-                var searchResult = connection.Query<Customer>($"SELECT ID FROM Customer WHERE ID=1");
-                foreach (Customer c in searchResult)
-                {
-                    if (Convert.ToString(c.Id).Contains("1"))
-                    {
-                        Console.WriteLine(c.Id);
-                    }
-
-                }
-
+                Console.WriteLine(c.Id + " " + c.Name + " " + c.Addres + "" + c.SocialSecurityNumber);
             }
+
         }
+
     }
 
 }
