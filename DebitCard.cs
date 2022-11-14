@@ -1,16 +1,19 @@
 public class Debitcard:Customer
 {
     public int ID {get; set;}
-    public int PinNumber {get; set;}
-    public int CardNumber {get; set;}
-    public string ExpirationDate {get; set;}
-    public int CvcNumber {get; set;}
-    public string BankName {get; set;}
+    public int pin_number {get; set;}
+    public long card_number {get; set;}
+    public string expiration_date {get; set;}
+    public int cvc_number {get; set;}
+    public string bank_name {get; set;}
+    public int account_id {get; set;}
 
 
     public Debitcard()
     {
 
     }
+
+   
 
 }
