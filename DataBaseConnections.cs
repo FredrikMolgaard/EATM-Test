@@ -5,7 +5,7 @@ public class DataBaseConnections
 {
 
     private string connectionstring = "Server=localhost;Database=eatm;Uid=eatm;Pwd=;";
-    public MySqlConnection connection;
+    public MySqlConnection? connection;
     public DataBaseConnections()
     {
         SqlConnect();
