@@ -14,6 +14,18 @@ public class Debitcard:Customer
 
     }
 
+    public Boolean CheckPin(int enterPin)
+    {
+         if (enterPin == pin_number )
+            {
+                return  true;
+            }
+            else
+            {
+                return false;
+            }
+    }
+
    
 
 }
