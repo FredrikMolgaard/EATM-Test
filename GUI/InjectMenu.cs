@@ -54,6 +54,7 @@ public class Menu
                 Console.ReadKey();
                 Environment.Exit(0);
             }
+
             bool menu = true;
             while (menu == true)
             {
@@ -71,6 +72,7 @@ public class Menu
                 }
                 if (menuKey == ConsoleKey.D2)
                 {
+                    Console.Clear();
                     Console.WriteLine("How much you want to withdraw?: ");
                     int moneyToWithdraw = Convert.ToInt32(Console.ReadLine());
                     var balanceResult = db.connection.QuerySingle<Account>($"SELECT balance FROM account WHERE ID ='{insertedDebitCard.account_id}'");
@@ -79,6 +81,11 @@ public class Menu
                     if (balanceResult.balance >= moneyToWithdraw)
                     {
                         var withdrawResult = db.connection.Query<Account>($"UPDATE account SET balance = '{balanceResult.balance - moneyToWithdraw}' WHERE ID ='{insertedDebitCard.account_id}'");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Insufficient funds. You have {balanceResult.balance}kr in your account.\nPress any key to return to menu...");
+                        Console.ReadLine();
                     }
                 }
                 if (menuKey == ConsoleKey.D4)
