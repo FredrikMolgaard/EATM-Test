@@ -25,7 +25,7 @@ public class Menu
         bool pinCorrect = false;
         while (pinCorrect == false)
         {
-            System.Console.WriteLine($"\nWelcome! Your card is valid. Please enter your pin: ");
+            Console.WriteLine($"\nWelcome! Your card is valid. Please enter your pin: ");
             int enterPin = Convert.ToInt32(Console.ReadLine());
             if (insertedDebitCard.CheckPin(enterPin))
             {
