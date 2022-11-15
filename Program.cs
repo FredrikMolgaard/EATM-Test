@@ -9,6 +9,5 @@ internal class Program
         Menu starmenu = new Menu();
         starmenu.InjectCard();
 
-
     }
 }

@@ -4,6 +4,7 @@ using MySqlConnector;
 public class Menu
 {
     DataBaseConnections db = new();
+    string debitCardHolder;
     public void InjectCard()
     {
         Console.WriteLine("Skriv in ID: ");
@@ -18,6 +19,7 @@ public class Menu
             Console.WriteLine(Convert.ToString(" " + d.bank_name + " " + "\n" + " " + d.card_number + " " + d.expiration_date + " " + d.cvc_number + "\n" + " " + d.Name)); // show card
             Console.WriteLine("|--------------------------|");
             insertedDebitCard = d;
+            debitCardHolder = d.Name;
         }
        
         int maxTries = 4;
@@ -25,7 +27,7 @@ public class Menu
         bool pinCorrect = false;
         while (pinCorrect == false)
         {
-            System.Console.WriteLine($"\nWelcome! Your card is valid. Please enter your pin: ");
+            Console.WriteLine($"\nWelcome {debitCardHolder}! Your card is valid. Please enter your pin: ");
             int enterPin = Convert.ToInt32(Console.ReadLine());
             if (insertedDebitCard.CheckPin(enterPin))
             {
@@ -39,7 +41,7 @@ public class Menu
 
             if (numberOfTries >= maxTries)
             {
-                Console.WriteLine($"To many tries. Your debitcard has been locked. Please contact for more information.");
+                Console.WriteLine($"Too many tries. Your debitcard has been locked. Please contact your bank for more information.");
                 Console.ReadKey();
                 Environment.Exit(0);
             }
