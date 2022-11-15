@@ -7,8 +7,8 @@ public class Menu
     string debitCardHolder;
     public void InjectCard()
     {   
-        Console.WriteLine("Injecting card.......... Please Wait");
-        Thread.Sleep(5000);
+        // Console.WriteLine("Injecting card.......... Please Wait");
+        // Thread.Sleep(5000);
         Console.WriteLine("Skriv in ID: ");
         string? search = Console.ReadLine();
         var searchResult = db.connection.Query<Debitcard>($"SELECT d.card_number, d.bank_name, d.expiration_date, d.cvc_number, d.pin_number, d.account_id, c.name FROM debitcard d INNER JOIN customer c ON d.customer_id = c.ID WHERE d.ID ='{search}'");
@@ -57,7 +57,9 @@ public class Menu
                 Environment.Exit(0);
             }
 
-            bool menu = true;
+            
+            
+            {bool menu = true;
             while (menu == true)
             {
                 Console.Clear();
@@ -77,10 +79,17 @@ public class Menu
                     Console.Clear();
                     Console.WriteLine("How much you want to withdraw?: ");
                     int moneyToWithdraw = Convert.ToInt32(Console.ReadLine());
+                    int maxAmount = 5000;
                     var balanceResult = db.connection.QuerySingle<Account>($"SELECT balance FROM account WHERE ID ='{insertedDebitCard.account_id}'");
                     Console.WriteLine("Balance result:" + balanceResult.balance);
+                   
+                    if (moneyToWithdraw > maxAmount)
+                    {
+                        Console.WriteLine("Your limit for each withdrawl is 5000.");
+                        Thread.Sleep(3000);
+                    }
 
-                    if (balanceResult.balance >= moneyToWithdraw)
+                    else if (balanceResult.balance >= moneyToWithdraw)
                     {
                         var withdrawResult = db.connection.Query<Account>($"UPDATE account SET balance = '{balanceResult.balance - moneyToWithdraw}' WHERE ID ='{insertedDebitCard.account_id}'");
                     }
@@ -101,7 +110,7 @@ public class Menu
                     Thread.Sleep(2500);
                     Environment.Exit(0);
                 }
-
+            }
             }
         }
     }
