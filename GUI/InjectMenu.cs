@@ -6,7 +6,9 @@ public class Menu
     DataBaseConnections db = new();
     string debitCardHolder;
     public void InjectCard()
-    {
+    {   
+        Console.WriteLine("Injecting card.......... Please Wait");
+        Thread.Sleep(5000);
         Console.WriteLine("Skriv in ID: ");
         string? search = Console.ReadLine();
         var searchResult = db.connection.Query<Debitcard>($"SELECT d.card_number, d.bank_name, d.expiration_date, d.cvc_number, d.pin_number, d.account_id, c.name FROM debitcard d INNER JOIN customer c ON d.customer_id = c.ID WHERE d.ID ='{search}'");
@@ -83,6 +85,13 @@ public class Menu
                 }
                 if (menuKey == ConsoleKey.D4)
                 {
+                    Console.Clear();
+                    Console.WriteLine("Ejecting card.......");
+                    Thread.Sleep(2500);
+                    Console.WriteLine("Din mamma är en mullvaden");
+                    Thread.Sleep(2500);
+                    Console.WriteLine("Hejdå sonen till mamma mullvad");
+                    Thread.Sleep(2500);
                     Environment.Exit(0);
                 }
 
