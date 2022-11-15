@@ -63,6 +63,8 @@ public class Menu
 
 
             {
+                int withDrawMax = 5;
+                int withDrawCount = 0;
                 bool menu = true;
                 while (menu == true)
                 {
@@ -70,6 +72,7 @@ public class Menu
                     Console.WriteLine("[1] - Show Balance\n[2] - Withdraw money\n[3] - Transaction history\n[4] - Exit");
                     ConsoleKey menuKey = Console.ReadKey().Key;
 
+                   
 
                     if (menuKey == ConsoleKey.D1)
                     {
@@ -82,7 +85,14 @@ public class Menu
                     {
                         while (true)
                         {
+                            withDrawCount++;
                             Console.Clear();
+                            if (withDrawCount >= withDrawMax)
+                            {
+                                Console.WriteLine("Max times of withdrawls reached. Please contact your bank for more information. You will go back to menu.  ");
+                                Thread.Sleep(3000);
+                                break;
+                            }
                             Console.WriteLine("How much you want to withdraw?: ");
                             int moneyToWithdraw = Convert.ToInt32(Console.ReadLine());
                             int maxAmount = 5000;
