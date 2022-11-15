@@ -15,11 +15,20 @@ public class Menu
         foreach (Debitcard d in searchResult)
         {
             Console.Clear();
-            Console.WriteLine("|--------------------------|");
-            Console.WriteLine(Convert.ToString(" " + d.bank_name + " " + "\n" + " " + d.card_number + " " + d.expiration_date + " " + d.cvc_number + "\n" + " " + d.Name)); // show card
-            Console.WriteLine("|--------------------------|");
+            string cardNumberCensored = Convert.ToString(d.card_number);
+            Console.WriteLine($" ________________________________________");
+            Console.WriteLine($"|                               {d.bank_name}   ");
+            Console.WriteLine($"|  {cardNumberCensored}                                   ");
+            Console.WriteLine($"|                                        ");
+            Console.WriteLine($"|  [##]>>))                              ");
+            Console.WriteLine($"|            Exp Date        CVC         ");
+            Console.WriteLine($"|              {d.expiration_date}          {d.cvc_number}         ");
+            Console.WriteLine($"|                                        ");
+            Console.WriteLine($"| {d.Name}                       ");
+            Console.WriteLine($"|_________________________________________");
             insertedDebitCard = d;
             debitCardHolder = d.Name;
+            cardNumberCensored = d.CensoreDebitCard(cardNumberCensored);
         }
        
         int maxTries = 4;
