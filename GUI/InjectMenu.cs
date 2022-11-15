@@ -30,7 +30,7 @@ public class Menu
             debitCardHolder = d.Name;
             cardNumberCensored = d.CensoreDebitCard(cardNumberCensored);
         }
-       
+
         int maxTries = 4;
         int numberOfTries = 1;
         bool pinCorrect = false;
@@ -54,7 +54,40 @@ public class Menu
                 Console.ReadKey();
                 Environment.Exit(0);
             }
+            bool menu = true;
+            while (menu == true)
+            {
+                Console.Clear();
+                Console.WriteLine("[1] - Show Balance\n[2] - Withdraw money\n[3] - Transaction history\n[4] - Exit");
+                ConsoleKey menuKey = Console.ReadKey().Key;
+                
 
+                if (menuKey == ConsoleKey.D1)
+                {
+                    Console.Clear();
+                    var balanceResult = db.connection.QuerySingle<Account>($"SELECT a.balance FROM account a WHERE a.ID ='{insertedDebitCard.account_id}'");
+                    Console.WriteLine("Balance result:" + balanceResult.balance);
+                    Console.ReadLine();
+                }
+                if (menuKey == ConsoleKey.D2)
+                {
+                    Console.WriteLine("How much you want to withdraw?: ");
+                    int moneyToWithdraw = Convert.ToInt32(Console.ReadLine());
+                    var balanceResult = db.connection.QuerySingle<Account>($"SELECT balance FROM account WHERE ID ='{insertedDebitCard.account_id}'");
+                    Console.WriteLine("Balance result:" + balanceResult.balance);
+
+                    if (balanceResult.balance >= moneyToWithdraw)
+                    {
+                        var withdrawResult = db.connection.Query<Account>($"UPDATE account SET balance = '{balanceResult.balance - moneyToWithdraw}' WHERE ID ='{insertedDebitCard.account_id}'");
+                    }
+                }
+                if (menuKey == ConsoleKey.D4)
+                {
+                    Environment.Exit(0);
+                }
+
+            }
         }
     }
-}    
+
+}
