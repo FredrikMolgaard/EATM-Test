@@ -1,4 +1,4 @@
-public class Debitcard:Customer
+public class Debitcard : Customer
 {
     public int Id {get; set;}
     public int pin_number {get; set;}
@@ -26,6 +26,10 @@ public class Debitcard:Customer
             }
     }
 
-   
+    public string CensoreDebitCard(string card_number)
+    {
+        card_number = $"{string.Concat(Enumerable.Repeat("*", 10))}{card_number.Substring(10)}";
+        return card_number;
+    }
 
 }
