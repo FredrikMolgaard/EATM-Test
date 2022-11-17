@@ -18,7 +18,6 @@ internal class Program
         int checkPin = Convert.ToInt32(Console.ReadLine());
         // customerInfo.CheckPin(checkPin);
 
-
         static int InputError(int minValue, int maxValue, string errorMessage)
         {
             int parsedValue;
@@ -41,7 +40,7 @@ internal class Program
         Console.WriteLine($"|                                        ");
         Console.WriteLine($"| {cardInfo.Name}                       ");
         Console.WriteLine($"|_________________________________________");
-        
+
         bool menu = true;
         while (menu == true)
         {
@@ -63,7 +62,9 @@ internal class Program
             }
             if (menuKey == ConsoleKey.D4)
             {
-
+                Console.WriteLine("Thank you for using our services . Welcome back!");
+                Thread.Sleep(3000);
+                Environment.Exit(0);
             }
         }
     }
