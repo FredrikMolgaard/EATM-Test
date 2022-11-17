@@ -31,32 +31,40 @@ public class DebitcardManager : Debitcard
         return numberOfCards;
     }
 
-    public void Debitcard()
+    public Boolean CheckPin(int enterPin) // används bara vid inlogg. S
     {
+        if (enterPin == pin_number)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
-        // string debitcardHolder;
+    public void CheckNumberOfAttempts(int enteredPin)
+    {
+        string returnMessage;
         int maxTries = 4;
         int numberOfTries = 1;
         bool pinCorrect = false;
 
         while (pinCorrect == false)
         {
-            Console.WriteLine($"\nWelcome {customerInfo}! Your card is valid. Please enter your pin: ");
-            int enterPin = Convert.ToInt32(Console.ReadLine());
-            if (insertedDebitCard.CheckPin(enterPin))
+            if (insertedDebitCard.CheckPin(enteredPin))
             {
                 pinCorrect = true;
             }
             else
             {
-                Console.WriteLine($"Wrong pin. Please try again\nNumber of tries: {numberOfTries}");
+                returnMessage = "Wrong pin. Try again";
                 numberOfTries++;
             }
             if (numberOfTries >= maxTries)
             {
-                Console.WriteLine($"Too many tries. Your debitcard has been locked. Please contact your bank for more information.");
+                returnMessage = "ATTENTION! Your card has been seized. Contact your bank for more information\nPress any key to return to menu.";
                 Console.ReadKey();
-                Environment.Exit(0);
             }
 
         }
