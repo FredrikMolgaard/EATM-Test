@@ -18,6 +18,12 @@ public class Menu
         Console.WriteLine("Skriv in ID: "); // UI
         string? search = Console.ReadLine(); // UI
 
+        DebitcardManager test = new();
+        Debitcard x = test.GetCustomerInfo(search);
+        Console.WriteLine(x.bank_name);
+        Console.ReadLine();
+
+
         foreach (Debitcard d in searchResult)
         {
             Console.Clear();
@@ -93,10 +99,15 @@ public class Menu
                             int maxAmount = 5000;
                             var balanceResult = db.connection.QuerySingle<Account>($"SELECT balance FROM account WHERE ID ='{insertedDebitCard.account_id}'");
                             Console.WriteLine("Balance result:" + balanceResult.balance);
-
                             if (moneyToWithdraw > maxAmount)
+
                             {
                                 Console.WriteLine("Your limit for each withdrawl is 5000.\nRedirecting...");
+                                Thread.Sleep(3000);
+                            }
+                            if (moneyToWithdraw <= 99)
+                            {
+                                Console.WriteLine("Your limit for minimum withdrawl is 100.\nRedirecting...");
                                 Thread.Sleep(3000);
                             }
 
