@@ -6,7 +6,7 @@ internal class Program
     private static void Main(string[] args)
     {
         DebitcardManager customerInfo = new();
-        AccountManager key1 = new();
+        AccountManager accountManager = new();
 
 
         int cardCount = customerInfo.GetAmountOfDebitcards();  //Tar reda på hur många "kort" det finns i databasen.
@@ -51,11 +51,11 @@ internal class Program
 
             if (menuKey == ConsoleKey.D1)
             {
-                key1.ShowBalance();
+                accountManager.ShowBalance();
             }
             if (menuKey == ConsoleKey.D2)
             {
-
+                
             }
             if (menuKey == ConsoleKey.D3)
             {
