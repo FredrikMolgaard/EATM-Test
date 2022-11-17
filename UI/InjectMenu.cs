@@ -13,35 +13,35 @@ public class Menu
         Console.Clear();
         // Console.WriteLine("Injecting card.......... Please Wait");
         // Thread.Sleep(5000);
-                                             // var numberOfUsers = db.connection.QuerySingle<int>("SELECT COUNT(ID) FROM debitcard;");   // HÄMTAR UT ANTALET BANKKORT I DB. Använd resultat för att se till att man inte kan skriva in ID på ej-existerande bankkort.
-                                             // var searchResult = db.connection.Query<Debitcard>($"SELECT d.card_number, d.bank_name, d.expiration_date, d.cvc_number, d.pin_number, d.account_id, c.name FROM debitcard d INNER JOIN customer c ON d.customer_id = c.ID WHERE d.ID ='{search}'");
         Console.WriteLine("Skriv in ID: "); // UI
         string? search = Console.ReadLine(); // UI
         
-        DebitCardManager test = new();
-        Debitcard x = test.GetCustomerInfo(search);
-        Console.WriteLine(x.bank_name);
-        Console.ReadLine();
+        // DebitCardManager test = new();
+        // Debitcard x = test.GetCustomerInfo(search);
+        // Console.WriteLine(x.bank_name);
+        // Console.ReadLine();
         
+        var numberOfUsers = db.connection.QuerySingle<int>("SELECT COUNT(ID) FROM debitcard;");   // HÄMTAR UT ANTALET BANKKORT I DB. Använd resultat för att se till att man inte kan skriva in ID på ej-existerande bankkort.
+         var searchResult = db.connection.Query<Debitcard>($"SELECT d.card_number, d.bank_name, d.expiration_date, d.cvc_number, d.pin_number, d.account_id, c.name FROM debitcard d INNER JOIN customer c ON d.customer_id = c.ID WHERE d.ID ='{search}'");
         
-        // foreach (Debitcard d in searchResult)
-        // {
-        //     Console.Clear();
-        //     string cardNumberCensored = Convert.ToString(d.card_number);
-        //     Console.WriteLine($" ________________________________________");
-        //     Console.WriteLine($"|                               {d.bank_name}   ");
-        //     Console.WriteLine($"|  {cardNumberCensored}                                   ");
-        //     Console.WriteLine($"|                                        ");
-        //     Console.WriteLine($"|  [##]>>))                              ");
-        //     Console.WriteLine($"|            Exp Date        CVC         ");
-        //     Console.WriteLine($"|              {d.expiration_date}          {d.cvc_number}         ");
-        //     Console.WriteLine($"|                                        ");
-        //     Console.WriteLine($"| {d.Name}                       ");
-        //     Console.WriteLine($"|_________________________________________");
-        //     insertedDebitCard = d;
-        //     debitCardHolder = d.Name;
-        //     cardNumberCensored = d.CensoreDebitCard(cardNumberCensored);
-        // }
+        foreach (Debitcard d in searchResult)
+        {
+            Console.Clear();
+            string cardNumberCensored = Convert.ToString(d.card_number);
+            Console.WriteLine($" ________________________________________");
+            Console.WriteLine($"|                               {d.bank_name}   ");
+            Console.WriteLine($"|  {cardNumberCensored}                                   ");
+            Console.WriteLine($"|                                        ");
+            Console.WriteLine($"|  [##]>>))                              ");
+            Console.WriteLine($"|            Exp Date        CVC         ");
+            Console.WriteLine($"|              {d.expiration_date}          {d.cvc_number}         ");
+            Console.WriteLine($"|                                        ");
+            Console.WriteLine($"| {d.Name}                       ");
+            Console.WriteLine($"|_________________________________________");
+            insertedDebitCard = d;
+            debitCardHolder = d.Name;
+            cardNumberCensored = d.CensoreDebitCard(cardNumberCensored);
+        }
 
         int maxTries = 4;
         int numberOfTries = 1;
@@ -99,10 +99,15 @@ public class Menu
                             int maxAmount = 5000;
                             var balanceResult = db.connection.QuerySingle<Account>($"SELECT balance FROM account WHERE ID ='{insertedDebitCard.account_id}'");
                             Console.WriteLine("Balance result:" + balanceResult.balance);
-
                             if (moneyToWithdraw > maxAmount)
+
                             {
                                 Console.WriteLine("Your limit for each withdrawl is 5000.\nRedirecting...");
+                                Thread.Sleep(3000);
+                            }
+                            if (moneyToWithdraw <= 99)
+                            {
+                                Console.WriteLine("Your limit for minimum withdrawl is 100.\nRedirecting...");
                                 Thread.Sleep(3000);
                             }
 
@@ -124,10 +129,10 @@ public class Menu
                         
                         
                         
-                        // Console.WriteLine("Ejecting card");
-                        // Console.WriteLine("...............")
-                        // Thread.Sleep(2500);
-                        // Environment.Exit(0);
+                        Console.WriteLine("Ejecting card");
+                        Console.WriteLine("...............");
+                        Thread.Sleep(2500);
+                        Environment.Exit(0);
                     }
                 }
             }
