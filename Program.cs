@@ -6,7 +6,7 @@ internal class Program
     private static void Main(string[] args)
     {
         DebitcardManager customerInfo = new();
-        AccountManager key1 = new();
+        AccountManager accountManager = new();
 
 
         int cardCount = customerInfo.GetAmountOfDebitcards();  //Tar reda på hur många "kort" det finns i databasen.
@@ -17,7 +17,6 @@ internal class Program
         Console.WriteLine("Enter pin");
         int checkPin = Convert.ToInt32(Console.ReadLine());
         // customerInfo.CheckPin(checkPin);
-
 
         static int InputError(int minValue, int maxValue, string errorMessage)
         {
@@ -41,7 +40,7 @@ internal class Program
         Console.WriteLine($"|                                        ");
         Console.WriteLine($"| {cardInfo.Name}                       ");
         Console.WriteLine($"|_________________________________________");
-        
+
         bool menu = true;
         while (menu == true)
         {
@@ -51,7 +50,7 @@ internal class Program
 
             if (menuKey == ConsoleKey.D1)
             {
-                key1.ShowBalance();
+                accountManager.ShowBalance();
             }
             if (menuKey == ConsoleKey.D2)
             {
@@ -63,7 +62,9 @@ internal class Program
             }
             if (menuKey == ConsoleKey.D4)
             {
-
+                Console.WriteLine("Thank you for using our services . Welcome back!");
+                Thread.Sleep(3000);
+                Environment.Exit(0);
             }
         }
     }
