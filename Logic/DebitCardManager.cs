@@ -3,7 +3,7 @@ using MySqlConnector;
 
 public class DebitcardManager : Debitcard
 {
-    Debitcard debitcardHolder;
+    Debitcard customerInfo;
     Debitcard insertedDebitCard = null!;
     DataBaseConnections db = new(); /// S?
     public void CountUsers()
@@ -11,18 +11,18 @@ public class DebitcardManager : Debitcard
         var numberOfUsers = db.connection.QuerySingle<Debitcard>("SELECT COUNT(ID) FROM debitcard;");
     }
 
-    public Debitcard GetCustomerInfo(int search)
+    public Debitcard GetCustomerInfo(int cardId)
     {
-        var searchResult = db.connection.Query<Debitcard>($"SELECT d.card_number, d.bank_name, d.expiration_date, d.cvc_number, d.pin_number, d.account_id, c.name FROM debitcard d INNER JOIN customer c ON d.customer_id = c.ID WHERE d.ID ='{search}'");
+        var searchCustomerInfo = db.connection.Query<Debitcard>($"SELECT d.card_number, d.bank_name, d.expiration_date, d.cvc_number, d.pin_number, d.account_id, c.name FROM debitcard d INNER JOIN customer c ON d.customer_id = c.ID WHERE d.ID ='{cardId}'");
 
-        foreach (Debitcard card in searchResult)
+        foreach (Debitcard card in searchCustomerInfo)
         {
             if (true)
             {
-                debitcardHolder = card;
+                customerInfo = card;
             }
         }
-        return debitcardHolder;
+        return customerInfo;
 
     }
     public int GetAmountOfDebitcards()
@@ -33,15 +33,15 @@ public class DebitcardManager : Debitcard
 
     public void Debitcard()
     {
-        
-        string debitcardHolder;
+
+        // string debitcardHolder;
         int maxTries = 4;
         int numberOfTries = 1;
         bool pinCorrect = false;
 
         while (pinCorrect == false)
         {
-            Console.WriteLine($"\nWelcome {debitcardHolder}! Your card is valid. Please enter your pin: ");
+            Console.WriteLine($"\nWelcome {customerInfo}! Your card is valid. Please enter your pin: ");
             int enterPin = Convert.ToInt32(Console.ReadLine());
             if (insertedDebitCard.CheckPin(enterPin))
             {
@@ -62,4 +62,4 @@ public class DebitcardManager : Debitcard
         }
 
     }
-}    
+}

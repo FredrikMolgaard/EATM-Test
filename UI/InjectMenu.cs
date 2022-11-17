@@ -13,17 +13,11 @@ public class Menu
         Console.Clear();
         Console.WriteLine("Please insert your card");
 
-                                             // var numberOfUsers = db.connection.QuerySingle<int>("SELECT COUNT(ID) FROM debitcard;");   // HÄMTAR UT ANTALET BANKKORT I DB. Använd resultat för att se till att man inte kan skriva in ID på ej-existerande bankkort.
-                                             // var searchResult = db.connection.Query<Debitcard>($"SELECT d.card_number, d.bank_name, d.expiration_date, d.cvc_number, d.pin_number, d.account_id, c.name FROM debitcard d INNER JOIN customer c ON d.customer_id = c.ID WHERE d.ID ='{search}'");
+        // var numberOfUsers = db.connection.QuerySingle<int>("SELECT COUNT(ID) FROM debitcard;");   // HÄMTAR UT ANTALET BANKKORT I DB. Använd resultat för att se till att man inte kan skriva in ID på ej-existerande bankkort.
+        // var searchResult = db.connection.Query<Debitcard>($"SELECT d.card_number, d.bank_name, d.expiration_date, d.cvc_number, d.pin_number, d.account_id, c.name FROM debitcard d INNER JOIN customer c ON d.customer_id = c.ID WHERE d.ID ='{search}'");
         Console.WriteLine("Skriv in ID: "); // UI
         string? search = Console.ReadLine(); // UI
-        
-        DebitcardManager test = new();
-        Debitcard x = test.GetCustomerInfo(search);
-        Console.WriteLine(x.bank_name);
-        Console.ReadLine();
-        
-        
+
         foreach (Debitcard d in searchResult)
         {
             Console.Clear();
@@ -48,7 +42,7 @@ public class Menu
         bool pinCorrect = false;
         while (pinCorrect == false)
         {
-            Console.WriteLine($"\nWelcome {debitCardHolder}! Your card is valid. Please enter your pin: ");
+            Console.WriteLine($"\nWelcome {customerInfo}! Your card is valid. Please enter your pin: ");
             int enterPin = Convert.ToInt32(Console.ReadLine());
             if (insertedDebitCard.CheckPin(enterPin))
             {
@@ -120,10 +114,10 @@ public class Menu
                     }
                     if (menuKey == ConsoleKey.D4)
                     {
-             
-                        
-                        
-                        
+
+
+
+
                         // Console.WriteLine("Ejecting card");
                         // Console.WriteLine("...............")
                         // Thread.Sleep(2500);
