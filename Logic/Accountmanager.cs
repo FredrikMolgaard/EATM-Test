@@ -12,53 +12,55 @@ public class AccountManager : Account
         return newAccount.balance;
     }
 
-    public int WithdrawLimit()
+    public string WithdrawLimit()
     {
-        int withDrawMax = 5;
-        int withDrawCount = 0;
-        int moneyToWithdraw = 0;
-        string maxMessage;
+        int withdrawCount = 0;
+        int cashWithdraw = 0;
         string returnMessage;
-       
         while (true)
         {
-            withDrawCount++;
+            withdrawCount++;
             Console.Clear();
-            if (withDrawCount > withDrawMax)
+            if (withdrawCount > 5)
             {
-                maxMessage ="Max times of withdrawls reached. Please contact your bank for more information. You will go back to menu.";
-                break;
+                returnMessage = "Maximum withdrawal limit reached. Please contact your bank for more information.\n\nRedirecting to menu...";
+                Thread.Sleep(5000);
+                return returnMessage;
             }
-            // var balanceResult = db.connection.QuerySingle<Account>($"SELECT balance FROM account WHERE ID ='{newAccount.ID}'");
-            // returnMessage = ("Balance result:" + balanceResult.balance);
-            else if (balanceResult.balance >= moneyToWithdraw)
-            {
-                var withdrawResult = db.connection.Query<Account>($"UPDATE account SET balance = '{balanceResult.balance - moneyToWithdraw}' WHERE ID ='{newAccount.ID}'");
-                break;
-            }
+            // var currentBalance = db.connection.QuerySingle<Account>($"SELECT balance FROM account WHERE ID ='{newAccount.ID}'");
+            // returnMessage = ("Balance result:" + currentBalance.balance);
+            // else if (newAccount.balance >= cashWithdraw)                                                                                                                  // <----Den här delen borde inte ligga här. Kanske borde ligga i en egen metod?
+            // {
+            //     var withdrawResult = db.connection.Query<Account>($"UPDATE account SET balance = '{newAccount.balance - cashWithdraw}' WHERE ID ='{newAccount.ID}'");
+            //     returnMessage = ""
+            // }
             else
             {
-                returnMessage = $"Insufficient funds. You have {balanceResult.balance}kr in your account.\nPress any key to return to menu...";
+                returnMessage = $"Insufficient funds. You have {newAccount.balance}kr in your account.\n\nPress any key to return to menu...";
                 Console.ReadLine();
+                return returnMessage;
             }
-            
+
         }
 
-        public int MaxWithdrawAmount()
-        {
-             int maxAmount = 5000;
+    }
+    public string MaxWithdrawAmount(int cashWithdraw)
+    {
+        string returnMessage;
 
-            if (moneyToWithdraw > maxAmount)
-            {
-                returnMessage ="Your limit for each withdrawl is 5000.\nRedirecting...";
-                Thread.Sleep(3000);
-            }
-            if (moneyToWithdraw <= 99)
-            {
-                returnMessage = "Your limit for minimum withdrawl is 100.\nRedirecting...";
-                Thread.Sleep(3000);
-            }
-        }  
+        if (cashWithdraw > 5000)
+        {
+            returnMessage = "Your limit for each withdrawl is 5000.\nRedirecting...";
+            Thread.Sleep(5000);
+            return returnMessage;
+        }
+        else if (cashWithdraw <= 99)
+        {
+            returnMessage = "Your limit for minimum withdrawl is 100.\nRedirecting...";
+            Thread.Sleep(5000);
+            return returnMessage;
+        }
+        return null;
     }
 
 

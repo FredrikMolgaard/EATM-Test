@@ -7,25 +7,17 @@ internal class Program
     {
         DebitcardManager customerInfo = new();
         AccountManager accountManager = new();
+        InputManager inputManager = new();
 
 
         int cardCount = customerInfo.GetAmountOfDebitcards();  //Tar reda på hur många "kort" det finns i databasen.
         Console.WriteLine($"Enter Id between 1 and {cardCount}: ");  // Tar in ett kort (samma som Id) och skriver ut "cardCount" för att visa 
-        int cardId = InputError(1, cardCount, "The debit card number you have enterered does not exist");  // Stoppar användaren från att skriva in ett id som inte finns i databasen.
+        int cardId = inputManager.InputError(1, cardCount, "The debit card number you have enterered does not exist");  // Stoppar användaren från att skriva in ett id som inte finns i databasen.
         Debitcard cardInfo = customerInfo.GetCustomerInfo(cardId);  // Skickar in det sökta värdet för att ta ut all information om kund och bankkort som vi behöver.
 
         Console.WriteLine("Enter pin");
         int checkPin = Convert.ToInt32(Console.ReadLine());
-        // customerInfo.CheckPin(checkPin);
-
-        static int InputError(int minValue, int maxValue, string errorMessage)
-        {
-            int parsedValue;
-            while (!Int32.TryParse(Console.ReadLine(), out parsedValue) || parsedValue > maxValue || parsedValue < minValue)
-                Console.WriteLine(errorMessage);
-            return parsedValue;
-        }
-
+        customerInfo.CheckPin(checkPin);
 
         Console.Clear();
         string cardNumberCensored = Convert.ToString(cardInfo.card_number);
@@ -62,7 +54,7 @@ internal class Program
             }
             if (menuKey == ConsoleKey.D4)
             {
-                Console.WriteLine("Thank you for using our services . Welcome back!");
+                Console.WriteLine("Thank you.\n\nPlease take your card");
                 Thread.Sleep(3000);
                 Environment.Exit(0);
             }
