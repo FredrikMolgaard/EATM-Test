@@ -6,6 +6,7 @@ internal class Program
     private static void Main(string[] args)
     {
         DebitcardManager customerInfo = new();
+        AccountManager key1 = new();
 
 
         int cardCount = customerInfo.GetAmountOfDebitcards();  //Tar reda på hur många "kort" det finns i databasen.
@@ -16,6 +17,15 @@ internal class Program
         Console.WriteLine("Enter pin");
         int checkPin = Convert.ToInt32(Console.ReadLine());
         // customerInfo.CheckPin(checkPin);
+
+
+        static int InputError(int minValue, int maxValue, string errorMessage)
+        {
+            int parsedValue;
+            while (!Int32.TryParse(Console.ReadLine(), out parsedValue) || parsedValue > maxValue || parsedValue < minValue)
+                Console.WriteLine(errorMessage);
+            return parsedValue;
+        }
 
 
         Console.Clear();
@@ -31,15 +41,30 @@ internal class Program
         Console.WriteLine($"|                                        ");
         Console.WriteLine($"| {cardInfo.Name}                       ");
         Console.WriteLine($"|_________________________________________");
-
-
-
-        static int InputError(int minValue, int maxValue, string errorMessage)
+        
+        bool menu = true;
+        while (menu == true)
         {
-            int parsedValue;
-            while (!Int32.TryParse(Console.ReadLine(), out parsedValue) || parsedValue > maxValue || parsedValue < minValue)
-                Console.WriteLine(errorMessage);
-            return parsedValue;
+            Console.Clear();
+            Console.WriteLine("[1] - Show Balance\n[2] - Withdraw money\n[3] - Transaction history\n[4] - Exit");
+            ConsoleKey menuKey = Console.ReadKey().Key;
+
+            if (menuKey == ConsoleKey.D1)
+            {
+                key1.ShowBalance();
+            }
+            if (menuKey == ConsoleKey.D2)
+            {
+
+            }
+            if (menuKey == ConsoleKey.D3)
+            {
+
+            }
+            if (menuKey == ConsoleKey.D4)
+            {
+
+            }
         }
     }
 }
