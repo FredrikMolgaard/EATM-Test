@@ -4,44 +4,44 @@ using MySqlConnector;
 public class Menu
 {
     DataBaseConnections db = new();
-    Debitcard insertedDebitCard = null!;
-    string? debitCardHolder;
+    // Debitcard insertedDebitCard = null!;
+    // string? debitCardHolder;
     public void InjectCard()
 
     {
 
         Console.Clear();
-        // Console.WriteLine("Injecting card.......... Please Wait");
-        // Thread.Sleep(5000);
+        Console.WriteLine("Please insert your card");
+
                                              // var numberOfUsers = db.connection.QuerySingle<int>("SELECT COUNT(ID) FROM debitcard;");   // HÄMTAR UT ANTALET BANKKORT I DB. Använd resultat för att se till att man inte kan skriva in ID på ej-existerande bankkort.
                                              // var searchResult = db.connection.Query<Debitcard>($"SELECT d.card_number, d.bank_name, d.expiration_date, d.cvc_number, d.pin_number, d.account_id, c.name FROM debitcard d INNER JOIN customer c ON d.customer_id = c.ID WHERE d.ID ='{search}'");
         Console.WriteLine("Skriv in ID: "); // UI
         string? search = Console.ReadLine(); // UI
         
-        DebitCardManager test = new();
+        DebitcardManager test = new();
         Debitcard x = test.GetCustomerInfo(search);
         Console.WriteLine(x.bank_name);
         Console.ReadLine();
         
         
-        // foreach (Debitcard d in searchResult)
-        // {
-        //     Console.Clear();
-        //     string cardNumberCensored = Convert.ToString(d.card_number);
-        //     Console.WriteLine($" ________________________________________");
-        //     Console.WriteLine($"|                               {d.bank_name}   ");
-        //     Console.WriteLine($"|  {cardNumberCensored}                                   ");
-        //     Console.WriteLine($"|                                        ");
-        //     Console.WriteLine($"|  [##]>>))                              ");
-        //     Console.WriteLine($"|            Exp Date        CVC         ");
-        //     Console.WriteLine($"|              {d.expiration_date}          {d.cvc_number}         ");
-        //     Console.WriteLine($"|                                        ");
-        //     Console.WriteLine($"| {d.Name}                       ");
-        //     Console.WriteLine($"|_________________________________________");
-        //     insertedDebitCard = d;
-        //     debitCardHolder = d.Name;
-        //     cardNumberCensored = d.CensoreDebitCard(cardNumberCensored);
-        // }
+        foreach (Debitcard d in searchResult)
+        {
+            Console.Clear();
+            string cardNumberCensored = Convert.ToString(d.card_number);
+            Console.WriteLine($" ________________________________________");
+            Console.WriteLine($"|                               {d.bank_name}   ");
+            Console.WriteLine($"|  {cardNumberCensored}                                   ");
+            Console.WriteLine($"|                                        ");
+            Console.WriteLine($"|  [##]>>))                              ");
+            Console.WriteLine($"|            Exp Date        CVC         ");
+            Console.WriteLine($"|              {d.expiration_date}          {d.cvc_number}         ");
+            Console.WriteLine($"|                                        ");
+            Console.WriteLine($"| {d.Name}                       ");
+            Console.WriteLine($"|_________________________________________");
+            insertedDebitcard = d;
+            debitCardHolder = d.Name;
+            cardNumberCensored = d.CensoreDebitCard(cardNumberCensored);
+        }
 
         int maxTries = 4;
         int numberOfTries = 1;
