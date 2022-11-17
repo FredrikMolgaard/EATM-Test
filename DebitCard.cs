@@ -14,7 +14,7 @@ public class Debitcard : Customer
 
     }
 
-    public Boolean CheckPin(int enterPin)
+    public Boolean CheckPin(int enterPin) // används bara vid inlogg. S
     {
         if (enterPin == pin_number)
         {
@@ -26,7 +26,7 @@ public class Debitcard : Customer
         }
     }
 
-    public string CensoreDebitCard(string card_number)
+    public string CensoreDebitCard(string card_number) // Hides numbers S
     {
         card_number = $"{string.Concat(Enumerable.Repeat("*", 10))}{card_number.Substring(10)}";
         return card_number;

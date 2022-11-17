@@ -4,4 +4,4 @@ public class Customer
     public string? Name { get; set; }
     public string? Addres { get; set; }
     public int SocialSecurityNumber { get; set; }
-}
+} // S
