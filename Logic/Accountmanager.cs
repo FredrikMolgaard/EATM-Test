@@ -1,20 +1,28 @@
 using Dapper;
 using MySqlConnector;
 
-public class AccountManager : Account
+public class AccountManager 
 {
     DataBaseConnections db = new();
-    Account newAccount = new();
+    Account activeAccount = new();
+    
+    // Metod för att uppdatera vilket account som är aktivt
+    public void SetActiveAccount(int id)
+    {   
+        activeAccount.ID = id;
+    }
 
-    public int ShowBalance()
-    {
-        var balanceResult = db.connection.QuerySingle<Account>($"SELECT a.Balance FROM account a WHERE a.ID ='{newAccount.ID}'");  // Första menyvalet
-        return newAccount.Balance;
+    // Plocka ut balance för att aktiva accountet. Alltså det debitcard som är isatt och kopplat till ett visst account
+    public int GetBalance()
+    {   
+        int balanceResult = db.connection.QuerySingle<int>($"SELECT balance FROM account WHERE ID ='{activeAccount.ID}'"); 
+        return balanceResult;
     }
 
     public void Withdraw(int cashWithdraw)
     {
-        var cashWithdrawal = db.connection.Query<Account>($"UPDATE account SET balance = '{newAccount.Balance - cashWithdraw}' WHERE ID ='{newAccount.ID}'");
+        int myBalance = GetBalance();
+        var cashWithdrawal = db.connection.Query<Account>($"UPDATE account SET balance = '{activeAccount.Balance - cashWithdraw}' WHERE ID ='{activeAccount.ID}'");
     }
 
     public string WithdrawLimit()
@@ -34,7 +42,7 @@ public class AccountManager : Account
             }
             else
             {
-                returnMessage = $"Insufficient funds. You have {newAccount.Balance}kr in your account.\n\nPress any key to return to menu...";
+                returnMessage = $"Insufficient funds. You have {activeAccount.Balance}kr in your account.\n\nPress any key to return to menu...";
                 Console.ReadLine();
                 return returnMessage;
             }

@@ -1,11 +1,13 @@
 using Dapper;
 using MySqlConnector;
 
-public class DebitcardManager : Debitcard
+public class DebitcardManager 
 {
-    Debitcard customerInfo;
-    DebitcardManager insertedDebitCard = null!;
+    Debitcard insertedDebitCard;
     DataBaseConnections db = new(); /// S?
+
+    int numberOfPinAttempts = 0;
+    
     public void CountUsers()
     {
         var numberOfUsers = db.connection.QuerySingle<Debitcard>("SELECT COUNT(ID) FROM debitcard;");
@@ -19,10 +21,10 @@ public class DebitcardManager : Debitcard
         {
             if (true)
             {
-                customerInfo = card;
+                insertedDebitCard = card;
             }
         }
-        return customerInfo;
+        return insertedDebitCard;
 
     }
     public int GetAmountOfDebitcards()
@@ -33,7 +35,8 @@ public class DebitcardManager : Debitcard
 
     public Boolean CheckPin(int enterPin) // används bara vid inlogg. S
     {
-        if (enterPin == PinNumber)
+        numberOfPinAttempts++;
+        if (enterPin == insertedDebitCard.PinNumber)
         {
             return true;
         }
@@ -43,32 +46,14 @@ public class DebitcardManager : Debitcard
         }
     }
 
-    public void CheckNumberOfAttempts(int enteredPin)
+    public bool NumberOfMaxPinAttemptsReached()
     {
-        string returnMessage;
-        int maxTries = 4;
-        int numberOfTries = 1;
-        bool pinCorrect = false;
-
-        while (pinCorrect == false)
+        if (numberOfPinAttempts >= 4)
         {
-            if (insertedDebitCard.CheckPin(enteredPin))
-            {
-                pinCorrect = true;
-            }
-            else
-            {
-                returnMessage = "Wrong pin. Try again";
-                numberOfTries++;
-            }
-            if (numberOfTries >= maxTries)
-            {
-                returnMessage = "ATTENTION! Your card has been seized. Contact your bank for more information\nPress any key to return to menu.";
-                Console.ReadKey();
-            }
-
+            return true;
         }
 
+        return false;
     }
 
         public string CensoreDebitCard(string card_number) // Hides numbers S

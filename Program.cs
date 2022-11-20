@@ -15,9 +15,19 @@ internal class Program
         int cardId = inputManager.InputError(1, cardCount, "The debit card number you have enterered does not exist");  // Stoppar användaren från att skriva in ett id som inte finns i databasen.
         Debitcard cardInfo = customerInfo.GetCustomerInfo(cardId);  // Skickar in det sökta värdet för att ta ut all information om kund och bankkort som vi behöver.
         
-        Console.WriteLine("Enter pin");
-        int checkPin = Convert.ToInt32(Console.ReadLine());
-        customerInfo.CheckPin(checkPin);
+        bool pinValidated = false;
+        while(pinValidated == false)
+        {
+            Console.WriteLine("Enter pin");
+            int checkPin = Convert.ToInt32(Console.ReadLine());
+            pinValidated = customerInfo.CheckPin(checkPin);
+            Console.WriteLine("Wrong Pin, Try Again");
+            if(customerInfo.NumberOfMaxPinAttemptsReached())
+            {
+                Console.WriteLine("Max Pin Attempts Reached, Your Card Locked");
+                Environment.Exit(0);
+            }
+        }
 
         Console.Clear();
         string cardNumberCensored = Convert.ToString(cardInfo.CardNumber);
@@ -38,12 +48,18 @@ internal class Program
         bool menu = true;
         while (menu == true)
         {
+            // Läs ut Account för det isatta debitcard
+            accountManager.SetActiveAccount(cardId);
+
             Console.WriteLine("[1] - SHOW BALANCE                    WITHDRAW MONEY - [2]\n[3] - TRANSACTION HISTORY                       EXIT - [4]");
             ConsoleKey menuKey = Console.ReadKey().Key;
 
             if (menuKey == ConsoleKey.D1)
             {
-                accountManager.ShowBalance();
+                Console.Clear();
+                int currentBalance = accountManager.GetBalance();
+                Console.WriteLine("Current Balance: " +  currentBalance);
+                Thread.Sleep(3000);
             }
             if (menuKey == ConsoleKey.D2)
             {
