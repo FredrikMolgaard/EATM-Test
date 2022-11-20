@@ -12,6 +12,11 @@ public class AccountManager : Account
         return newAccount.Balance;
     }
 
+    public void Withdraw(int cashWithdraw)
+    {
+        var cashWithdrawal = db.connection.Query<Account>($"UPDATE account SET balance = '{newAccount.Balance - cashWithdraw}' WHERE ID ='{newAccount.ID}'");
+    }
+
     public string WithdrawLimit()
     {
         int withdrawCount = 0;
@@ -27,13 +32,6 @@ public class AccountManager : Account
                 Thread.Sleep(5000);
                 return returnMessage;
             }
-            // var currentBalance = db.connection.QuerySingle<Account>($"SELECT balance FROM account WHERE ID ='{newAccount.ID}'");
-            // returnMessage = ("Balance result:" + currentBalance.balance);
-            // else if (newAccount.balance >= cashWithdraw)                                                                                                                  // <----Den här delen borde inte ligga här. Kanske borde ligga i en egen metod?
-            // {
-            //     var withdrawResult = db.connection.Query<Account>($"UPDATE account SET balance = '{newAccount.balance - cashWithdraw}' WHERE ID ='{newAccount.ID}'");
-            //     returnMessage = ""
-            // }
             else
             {
                 returnMessage = $"Insufficient funds. You have {newAccount.Balance}kr in your account.\n\nPress any key to return to menu...";
@@ -61,6 +59,28 @@ public class AccountManager : Account
             return returnMessage;
         }
         return null;
+    }
+
+    public void CurrenciesMenu(int cashChoice)
+    {
+        switch (cashChoice)
+        {
+            case 1:
+                Withdraw(100);
+                break;
+            case 2:
+                Withdraw(200);
+                break;
+            case 3:
+                Withdraw(500);
+                break;
+            case 4:
+                Withdraw(1000);
+                break;
+            case 5:
+                Withdraw(cashChoice);
+                break;
+        }
     }
 
 

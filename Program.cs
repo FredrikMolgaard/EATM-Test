@@ -14,10 +14,10 @@ internal class Program
         Console.WriteLine($"Enter Id between 1 and {cardCount}: ");  // Tar in ett kort (samma som Id) och skriver ut "cardCount" för att visa 
         int cardId = inputManager.InputError(1, cardCount, "The debit card number you have enterered does not exist");  // Stoppar användaren från att skriva in ett id som inte finns i databasen.
         Debitcard cardInfo = customerInfo.GetCustomerInfo(cardId);  // Skickar in det sökta värdet för att ta ut all information om kund och bankkort som vi behöver.
-
+        
         Console.WriteLine("Enter pin");
         int checkPin = Convert.ToInt32(Console.ReadLine());
-        // customerInfo.CheckNumberOfAttempts(checkPin);
+        customerInfo.CheckPin(checkPin);
 
         Console.Clear();
         string cardNumberCensored = Convert.ToString(cardInfo.CardNumber);
@@ -31,15 +31,14 @@ internal class Program
         Console.WriteLine($"|              {cardInfo.ExpirationDate}          {cardInfo.CvcNumber}         ");
         Console.WriteLine($"|                                        ");
         Console.WriteLine($"| {cardInfo.Name}                       ");
-        Console.WriteLine($"|_________________________________________");
-        Console.ReadLine();
-
+        Console.WriteLine($"|_________________________________________\n\n");
+        Console.WriteLine($"             WELCOME {cardInfo.Name}\n\n");
+        Console.WriteLine("_________________________________________________________\n");
 
         bool menu = true;
         while (menu == true)
         {
-            Console.Clear();
-            Console.WriteLine("[1] - Show Balance\n[2] - Withdraw money\n[3] - Transaction history\n[4] - Exit");
+            Console.WriteLine("[1] - SHOW BALANCE                    WITHDRAW MONEY - [2]\n[3] - TRANSACTION HISTORY                       EXIT - [4]");
             ConsoleKey menuKey = Console.ReadKey().Key;
 
             if (menuKey == ConsoleKey.D1)
@@ -48,7 +47,22 @@ internal class Program
             }
             if (menuKey == ConsoleKey.D2)
             {
-
+                Console.Clear();
+                Console.WriteLine("PLEASE SELECT AMOUNT ");
+                Console.WriteLine("[1]-[100kr]                    [200kr][2]-\n\n[3]-[500kr]                    [1000kr]-[4]\n          [5]ENTER AMOUNT:  ");
+                int cashChoice = inputManager.InputError(1, 5, "WRONG INPUT. PLEASE CHOOSE BETWEEN OPTION 1-5");
+                accountManager.CurrenciesMenu(cashChoice);
+                Console.WriteLine("PLEASE WAIT. COUNTING CASH...");
+                Thread.Sleep(5000);
+                Console.Beep();
+                Console.WriteLine("PLEASE TAKE YOUR CARD (Press any key)");
+                Console.ReadLine();
+                Console.Clear();
+                Console.WriteLine("PLEASE TAKE YOUR MONEY (Press any key)");
+                Console.ReadLine();
+                Console.Clear();
+                Console.WriteLine("THANK YOU FOR USING E-ATM. WELCOME BACK");
+                Thread.Sleep(10000);
             }
             if (menuKey == ConsoleKey.D3)
             {
@@ -57,7 +71,7 @@ internal class Program
             if (menuKey == ConsoleKey.D4)
             {
                 Console.Clear();
-                Console.WriteLine("Thank you.\n\nPlease take your card");
+                Console.WriteLine("     THANK YOU.\n\nPLEASE TAKE YOUR CARD");
                 Thread.Sleep(3000);
                 Environment.Exit(0);
             }

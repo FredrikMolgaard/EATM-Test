@@ -70,4 +70,10 @@ public class DebitcardManager : Debitcard
         }
 
     }
+
+        public string CensoreDebitCard(string card_number) // Hides numbers S
+    {
+        card_number = $"{string.Concat(Enumerable.Repeat("*", 10))}{card_number.Substring(10)}";
+        return card_number;
+    }
 }
