@@ -17,21 +17,23 @@ internal class Program
 
         Console.WriteLine("Enter pin");
         int checkPin = Convert.ToInt32(Console.ReadLine());
-        customerInfo.CheckPin(checkPin);
+        // customerInfo.CheckNumberOfAttempts(checkPin);
 
         Console.Clear();
-        string cardNumberCensored = Convert.ToString(cardInfo.card_number);
+        string cardNumberCensored = Convert.ToString(cardInfo.CardNumber);
         cardNumberCensored = customerInfo.CensoreDebitCard(cardNumberCensored);
         Console.WriteLine($" ________________________________________");
-        Console.WriteLine($"|                               {cardInfo.bank_name}   ");
+        Console.WriteLine($"|                               {cardInfo.BankName}   ");
         Console.WriteLine($"|  {cardNumberCensored}                                   ");
         Console.WriteLine($"|                                        ");
         Console.WriteLine($"|  [##]>>))                              ");
         Console.WriteLine($"|            Exp Date        CVC         ");
-        Console.WriteLine($"|              {cardInfo.expiration_date}          {cardInfo.cvc_number}         ");
+        Console.WriteLine($"|              {cardInfo.ExpirationDate}          {cardInfo.CvcNumber}         ");
         Console.WriteLine($"|                                        ");
         Console.WriteLine($"| {cardInfo.Name}                       ");
         Console.WriteLine($"|_________________________________________");
+        Console.ReadLine();
+
 
         bool menu = true;
         while (menu == true)
@@ -46,7 +48,7 @@ internal class Program
             }
             if (menuKey == ConsoleKey.D2)
             {
-                
+
             }
             if (menuKey == ConsoleKey.D3)
             {
@@ -54,6 +56,7 @@ internal class Program
             }
             if (menuKey == ConsoleKey.D4)
             {
+                Console.Clear();
                 Console.WriteLine("Thank you.\n\nPlease take your card");
                 Thread.Sleep(3000);
                 Environment.Exit(0);

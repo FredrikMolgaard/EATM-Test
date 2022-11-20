@@ -4,7 +4,7 @@ using MySqlConnector;
 public class DebitcardManager : Debitcard
 {
     Debitcard customerInfo;
-    Debitcard insertedDebitCard = null!;
+    DebitcardManager insertedDebitCard = null!;
     DataBaseConnections db = new(); /// S?
     public void CountUsers()
     {
@@ -13,7 +13,7 @@ public class DebitcardManager : Debitcard
 
     public Debitcard GetCustomerInfo(int cardId)
     {
-        var searchCustomerInfo = db.connection.Query<Debitcard>($"SELECT d.card_number, d.bank_name, d.expiration_date, d.cvc_number, d.pin_number, d.account_id, c.name FROM debitcard d INNER JOIN customer c ON d.customer_id = c.ID WHERE d.ID ='{cardId}'");
+        var searchCustomerInfo = db.connection.Query<Debitcard>($"SELECT d.card_number AS CardNumber, d.bank_name AS BankName, d.expiration_date AS ExpirationDate, d.cvc_number AS CvcNumber, d.pin_number AS PinNumber, d.account_id AS AccountId, c.name FROM debitcard d INNER JOIN customer c ON d.customer_id = c.ID WHERE d.ID ='{cardId}'");
 
         foreach (Debitcard card in searchCustomerInfo)
         {
@@ -33,7 +33,7 @@ public class DebitcardManager : Debitcard
 
     public Boolean CheckPin(int enterPin) // används bara vid inlogg. S
     {
-        if (enterPin == pin_number)
+        if (enterPin == PinNumber)
         {
             return true;
         }

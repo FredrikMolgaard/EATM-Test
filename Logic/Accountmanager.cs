@@ -8,8 +8,8 @@ public class AccountManager : Account
 
     public int ShowBalance()
     {
-        var balanceResult = db.connection.QuerySingle<Account>($"SELECT a.balance FROM account a WHERE a.ID ='{newAccount.ID}'");  // Första menyvalet
-        return newAccount.balance;
+        var balanceResult = db.connection.QuerySingle<Account>($"SELECT a.Balance FROM account a WHERE a.ID ='{newAccount.ID}'");  // Första menyvalet
+        return newAccount.Balance;
     }
 
     public string WithdrawLimit()
@@ -36,7 +36,7 @@ public class AccountManager : Account
             // }
             else
             {
-                returnMessage = $"Insufficient funds. You have {newAccount.balance}kr in your account.\n\nPress any key to return to menu...";
+                returnMessage = $"Insufficient funds. You have {newAccount.Balance}kr in your account.\n\nPress any key to return to menu...";
                 Console.ReadLine();
                 return returnMessage;
             }
