@@ -33,7 +33,7 @@ public class AccountManager
        
             if (myBalance <= 0)
             {
-                inputManager.ErrorMessage("Invalid money. Take your card...");
+                inputManager.ErrorMessage("INSUFFICIENT FUNDS. PLEASE TAKE YOUR CARD...");
                 Thread.Sleep(3000);
                 Environment.Exit(0);
             }
@@ -52,7 +52,7 @@ public class AccountManager
                 Withdraw(1000);
                 break;
             case 5:
-                Withdraw(inputManager.InputError(100, 5000, "Invalid withdraw input. Try again"));
+                Withdraw(inputManager.InputError(100, 5000, "INVALID WITHDRAWAL AMOUNT. AMOUNT MUST BE BETWEEN 100SEK - 5000SEK"));
                 break;
         }
     }
