@@ -8,8 +8,8 @@ internal class Program
         DebitcardManager customerInfo = new();
         AccountManager accountManager = new();
         InputManager inputManager = new();
-
-
+        
+        
         int cardCount = customerInfo.GetAmountOfDebitcards();  //Tar reda på hur många "kort" det finns i databasen.
         Console.WriteLine($"Enter Id between 1 and {cardCount}: ");  // Tar in ett kort (samma som Id) och skriver ut "cardCount" för att visa 
         int cardId = inputManager.InputError(1, cardCount, "The debit card number you have enterered does not exist");  // Stoppar användaren från att skriva in ett id som inte finns i databasen.
@@ -82,7 +82,12 @@ internal class Program
             }
             if (menuKey == ConsoleKey.D3)
             {
-
+                Console.Clear();
+                // List<Transaction> trans = accountManager.GetTransactions(cardId);
+                foreach (Transaction t in accountManager.GetTransactions(cardId))
+                {
+                    Console.WriteLine("Transaction: " + t.Date + ", " + t.Withdraw + ", " + t.account_id);
+                }
             }
             if (menuKey == ConsoleKey.D4)
             {

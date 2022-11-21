@@ -1,55 +1,34 @@
 using Dapper;
 using MySqlConnector;
 
-public class AccountManager 
+public class AccountManager
 {
     DataBaseConnections db = new();
     Account activeAccount = new();
-    
+    InputManager inputManager = new();
+    TransactionsManager transactionsManager = new();
+
     // Metod för att uppdatera vilket account som är aktivt
     public void SetActiveAccount(int id)
-    {   
+    {
         activeAccount.ID = id;
     }
 
     // Plocka ut balance för att aktiva accountet. Alltså det debitcard som är isatt och kopplat till ett visst account
     public int GetBalance()
-    {   
-        int balanceResult = db.connection.QuerySingle<int>($"SELECT balance FROM account WHERE ID ='{activeAccount.ID}'"); 
+    {
+        int balanceResult = db.connection.QuerySingle<int>($"SELECT balance FROM account WHERE ID ='{activeAccount.ID}'");
         return balanceResult;
     }
 
     public void Withdraw(int cashWithdraw)
     {
         int myBalance = GetBalance();
-        var cashWithdrawal = db.connection.Query<Account>($"UPDATE account SET balance = '{activeAccount.Balance - cashWithdraw}' WHERE ID ='{activeAccount.ID}'");
+        var cashWithdrawal = db.connection.Query<Account>($"UPDATE account SET balance = '{myBalance - cashWithdraw}' WHERE ID ='{activeAccount.ID}'");
+        transactionsManager.insertTransactions(cashWithdraw, activeAccount.ID);
     }
 
-    public string WithdrawLimit()
-    {
-        int withdrawCount = 0;
-        int cashWithdraw = 0;
-        string returnMessage;
-        while (true)
-        {
-            withdrawCount++;
-            Console.Clear();
-            if (withdrawCount > 5)
-            {
-                returnMessage = "Maximum withdrawal limit reached. Please contact your bank for more information.\n\nRedirecting to menu...";
-                Thread.Sleep(5000);
-                return returnMessage;
-            }
-            else
-            {
-                returnMessage = $"Insufficient funds. You have {activeAccount.Balance}kr in your account.\n\nPress any key to return to menu...";
-                Console.ReadLine();
-                return returnMessage;
-            }
-
-        }
-
-    }
+    
     public string MaxWithdrawAmount(int cashWithdraw)
     {
         string returnMessage;
@@ -71,6 +50,7 @@ public class AccountManager
 
     public void CurrenciesMenu(int cashChoice)
     {
+        string withdrawlMessage;
         switch (cashChoice)
         {
             case 1:
@@ -86,9 +66,15 @@ public class AccountManager
                 Withdraw(1000);
                 break;
             case 5:
-                Withdraw(cashChoice);
+                withdrawlMessage = ("How much do you want to withdrawl?: ");
+                Withdraw(inputManager.InputError(100, 5000, "Invalid withdraw input. Try again"));
                 break;
         }
+    }
+
+    public IEnumerable<Transaction> GetTransactions(int account_id)
+    {
+        return transactionsManager.GetTransactions(account_id);
     }
 
 
