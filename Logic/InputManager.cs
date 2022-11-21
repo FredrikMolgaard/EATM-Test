@@ -9,4 +9,10 @@ public class InputManager
             Console.WriteLine(errorMessage);
         return parsedValue;
     }
+    public string ErrorMessage (string message)
+    {
+        Console.WriteLine(message);
+        return message;
+    }
+    
 }

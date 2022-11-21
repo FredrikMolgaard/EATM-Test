@@ -8,21 +8,21 @@ internal class Program
         DebitcardManager customerInfo = new();
         AccountManager accountManager = new();
         InputManager inputManager = new();
-        
-        
+
+
         int cardCount = customerInfo.GetAmountOfDebitcards();  //Tar reda på hur många "kort" det finns i databasen.
         Console.WriteLine($"Enter Id between 1 and {cardCount}: ");  // Tar in ett kort (samma som Id) och skriver ut "cardCount" för att visa 
         int cardId = inputManager.InputError(1, cardCount, "The debit card number you have enterered does not exist");  // Stoppar användaren från att skriva in ett id som inte finns i databasen.
         Debitcard cardInfo = customerInfo.GetCustomerInfo(cardId);  // Skickar in det sökta värdet för att ta ut all information om kund och bankkort som vi behöver.
-        
+
         bool pinValidated = false;
-        while(pinValidated == false)
+        while (pinValidated == false)
         {
             Console.WriteLine("Enter pin");
             int checkPin = Convert.ToInt32(Console.ReadLine());
             pinValidated = customerInfo.CheckPin(checkPin);
             Console.WriteLine("Wrong Pin, Try Again");
-            if(customerInfo.NumberOfMaxPinAttemptsReached())
+            if (customerInfo.NumberOfMaxPinAttemptsReached())
             {
                 Console.WriteLine("Max Pin Attempts Reached, Your Card Locked");
                 Environment.Exit(0);
@@ -48,6 +48,7 @@ internal class Program
         bool menu = true;
         while (menu == true)
         {
+            Console.Clear();
             // Läs ut Account för det isatta debitcard
             accountManager.SetActiveAccount(cardId);
 
@@ -58,7 +59,7 @@ internal class Program
             {
                 Console.Clear();
                 int currentBalance = accountManager.GetBalance();
-                Console.WriteLine("Current Balance: " +  currentBalance);
+                Console.WriteLine("Current Balance: " + currentBalance);
                 Thread.Sleep(3000);
             }
             if (menuKey == ConsoleKey.D2)
@@ -78,16 +79,16 @@ internal class Program
                 Console.ReadLine();
                 Console.Clear();
                 Console.WriteLine("THANK YOU FOR USING E-ATM. WELCOME BACK");
-                Thread.Sleep(10000);
+                Thread.Sleep(3000);
+                Environment.Exit(0);
             }
             if (menuKey == ConsoleKey.D3)
             {
-                Console.Clear();
-                // List<Transaction> trans = accountManager.GetTransactions(cardId);
                 foreach (Transaction t in accountManager.GetTransactions(cardId))
                 {
                     Console.WriteLine("Transaction: " + t.Date + ", " + t.Withdraw + ", " + t.account_id);
                 }
+                Console.ReadLine();
             }
             if (menuKey == ConsoleKey.D4)
             {

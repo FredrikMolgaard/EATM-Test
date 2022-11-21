@@ -27,32 +27,19 @@ public class AccountManager
         var cashWithdrawal = db.connection.Query<Account>($"UPDATE account SET balance = '{myBalance - cashWithdraw}' WHERE ID ='{activeAccount.ID}'");
         transactionsManager.insertTransactions(cashWithdraw, activeAccount.ID);
     }
-
-    
-    public string MaxWithdrawAmount(int cashWithdraw)
-    {
-        string returnMessage;
-
-        if (cashWithdraw > 5000)
-        {
-            returnMessage = "Your limit for each withdrawl is 5000.\nRedirecting...";
-            Thread.Sleep(5000);
-            return returnMessage;
-        }
-        else if (cashWithdraw <= 99)
-        {
-            returnMessage = "Your limit for minimum withdrawl is 100.\nRedirecting...";
-            Thread.Sleep(5000);
-            return returnMessage;
-        }
-        return null;
-    }
-
     public void CurrenciesMenu(int cashChoice)
     {
-        string withdrawlMessage;
+        int myBalance = GetBalance();
+       
+            if (myBalance <= 0)
+            {
+                inputManager.ErrorMessage("Invalid money. Take your card...");
+                Thread.Sleep(3000);
+                Environment.Exit(0);
+            }
         switch (cashChoice)
         {
+
             case 1:
                 Withdraw(100);
                 break;
@@ -66,16 +53,18 @@ public class AccountManager
                 Withdraw(1000);
                 break;
             case 5:
-                withdrawlMessage = ("How much do you want to withdrawl?: ");
                 Withdraw(inputManager.InputError(100, 5000, "Invalid withdraw input. Try again"));
                 break;
         }
+
+
     }
 
     public IEnumerable<Transaction> GetTransactions(int account_id)
     {
         return transactionsManager.GetTransactions(account_id);
     }
+
 
 
 }
