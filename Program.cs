@@ -9,11 +9,11 @@ internal class Program
         AccountManager accountManager = new();
         InputManager inputManager = new();
 
-
         int cardCount = customerInfo.GetAmountOfDebitcards();  //Tar reda på hur många "kort" det finns i databasen.
-        Console.WriteLine($"Enter Id between 1 and {cardCount}: ");  // Tar in ett kort (samma som Id) och skriver ut "cardCount" för att visa 
+        Console.WriteLine($"Enter your cardnumber (Id): ");  // Tar in ett kort (samma som Id) och skriver ut "cardCount" för att visa 
         int cardId = inputManager.InputError(1, cardCount, "The debit card number you have enterered does not exist");  // Stoppar användaren från att skriva in ett id som inte finns i databasen.
         Debitcard cardInfo = customerInfo.GetCustomerInfo(cardId);  // Skickar in det sökta värdet för att ta ut all information om kund och bankkort som vi behöver.
+        customerInfo.CheckDate(); // kollar så datumet på kortet inte har gått ut. 
 
         bool pinValidated = false;
         while (pinValidated == false)
@@ -21,6 +21,7 @@ internal class Program
             Console.WriteLine("Enter pin");
             int checkPin = Convert.ToInt32(Console.ReadLine());
             pinValidated = customerInfo.CheckPin(checkPin);
+
             Console.WriteLine("Wrong Pin, Try Again");
             if (customerInfo.NumberOfMaxPinAttemptsReached())
             {
@@ -51,7 +52,7 @@ internal class Program
             Console.Clear();
             // Läs ut Account för det isatta debitcard
             accountManager.SetActiveAccount(cardId);
-
+            
             Console.WriteLine("[1] - SHOW BALANCE                    CASH WITHDRAWAL - [2]\n[3] - TRANSACTION HISTORY                       EXIT - [4]");
             ConsoleKey menuKey = Console.ReadKey().Key;
 
@@ -86,7 +87,7 @@ internal class Program
             {
                 foreach (Transaction t in accountManager.GetTransactions(cardId))
                 {
-                    Console.WriteLine("Transaction: " + t.Date + ", " + t.Withdraw + ", " + t.account_id);
+                    Console.WriteLine("Transaction: " + t.Date + ", " + t.Withdraw + "kr");
                 }
                 Console.ReadLine();
             }

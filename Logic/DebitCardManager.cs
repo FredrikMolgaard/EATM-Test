@@ -1,39 +1,42 @@
 using Dapper;
 using MySqlConnector;
 
-public class DebitcardManager 
+
+public class DebitcardManager
 {
-    Debitcard insertedDebitCard;
+    Debitcard? insertedDebitCard;
     DataBaseConnections db = new(); /// S?
+    DateTime localDate = DateTime.Now;
+    
 
     int numberOfPinAttempts = 0;
-    
-    public void CountUsers()
-    {
-        var numberOfUsers = db.connection.QuerySingle<Debitcard>("SELECT COUNT(ID) FROM debitcard;");
-    }
-
+    // public void CountUsers()
+    // {
+    //     var numberOfUsers = db.connection.QuerySingle<Debitcard>("SELECT COUNT(ID) FROM debitcard;");
+    // }
     public Debitcard GetCustomerInfo(int cardId)
     {
         var searchCustomerInfo = db.connection.Query<Debitcard>($"SELECT d.card_number AS CardNumber, d.bank_name AS BankName, d.expiration_date AS ExpirationDate, d.cvc_number AS CvcNumber, d.pin_number AS PinNumber, d.account_id AS AccountId, c.name FROM debitcard d INNER JOIN customer c ON d.customer_id = c.ID WHERE d.ID ='{cardId}'");
-
-        foreach (Debitcard card in searchCustomerInfo)
+        while (true)
         {
-            if (true)
+            foreach (Debitcard card in searchCustomerInfo)
             {
-                insertedDebitCard = card;
+                if (true)
+                {
+                    insertedDebitCard = card;
+                }
             }
+            return insertedDebitCard;
         }
-        return insertedDebitCard;
-
     }
+
     public int GetAmountOfDebitcards()
     {
         var numberOfCards = db.connection.QuerySingle<int>("SELECT COUNT(ID) FROM debitcard;");
         return numberOfCards;
     }
 
-    public Boolean CheckPin(int enterPin) // används bara vid inlogg. S
+    public bool CheckPin(int enterPin) // används bara vid inlogg. S
     {
         numberOfPinAttempts++;
         if (enterPin == insertedDebitCard.PinNumber)
@@ -56,9 +59,21 @@ public class DebitcardManager
         return false;
     }
 
-        public string CensoreDebitCard(string card_number) // Hides numbers S
+    public string CensoreDebitCard(string card_number) // Hides numbers S
     {
         card_number = $"{string.Concat(Enumerable.Repeat("*", 10))}{card_number.Substring(10)}";
         return card_number;
+    }
+    public void CheckDate()
+    {
+        if (localDate > insertedDebitCard.ExpirationDate)
+        {
+            Console.WriteLine("hej");
+            Environment.Exit(0);
+        }
+        else
+        {
+            System.Console.WriteLine("hejdå");
+        }
     }
 }

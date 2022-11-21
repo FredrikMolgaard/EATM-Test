@@ -20,7 +20,7 @@ public class AccountManager
         int balanceResult = db.connection.QuerySingle<int>($"SELECT balance FROM account WHERE ID ='{activeAccount.ID}'");
         return balanceResult;
     }
-
+    
     public void Withdraw(int cashWithdraw)
     {
         int myBalance = GetBalance();
@@ -39,7 +39,6 @@ public class AccountManager
             }
         switch (cashChoice)
         {
-
             case 1:
                 Withdraw(100);
                 break;
@@ -56,8 +55,6 @@ public class AccountManager
                 Withdraw(inputManager.InputError(100, 5000, "Invalid withdraw input. Try again"));
                 break;
         }
-
-
     }
 
     public IEnumerable<Transaction> GetTransactions(int account_id)
