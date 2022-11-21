@@ -1,3 +1,5 @@
+using Dapper;
+using MySqlConnector;
 public class Debitcard : Customer
 {
     public int Id { get; set; }

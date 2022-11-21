@@ -51,7 +51,7 @@ internal class Program
             // Läs ut Account för det isatta debitcard
             accountManager.SetActiveAccount(cardId);
 
-            Console.WriteLine("[1] - SHOW BALANCE                    WITHDRAW MONEY - [2]\n[3] - TRANSACTION HISTORY                       EXIT - [4]");
+            Console.WriteLine("[1] - SHOW BALANCE                    CASH WITHDRAWAL - [2]\n[3] - TRANSACTION HISTORY                       EXIT - [4]");
             ConsoleKey menuKey = Console.ReadKey().Key;
 
             if (menuKey == ConsoleKey.D1)
@@ -74,7 +74,7 @@ internal class Program
                 Console.WriteLine("PLEASE TAKE YOUR CARD (Press any key)");
                 Console.ReadLine();
                 Console.Clear();
-                Console.WriteLine("PLEASE TAKE YOUR MONEY (Press any key)");
+                Console.WriteLine("PLEASE COLLECT YOUR MONEY (Press any key)");
                 Console.ReadLine();
                 Console.Clear();
                 Console.WriteLine("THANK YOU FOR USING E-ATM. WELCOME BACK");
