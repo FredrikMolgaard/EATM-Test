@@ -91,7 +91,7 @@ internal class Program
                 Console.WriteLine("AVAILABLE BALANCE                     " + currentBalance);
                 foreach (Transaction t in accountManager.GetTransactions(cardId))
                 {
-                    Console.WriteLine(t.Date + ", " + t.Withdraw + "SEK");   // <----Returner inte rätt värden.
+                    Console.WriteLine("\n" + t.Date + "                 " + t.Withdraw + "SEK");   // <----Returner inte rätt värden.
                 }
                 Console.ReadLine();
             }
