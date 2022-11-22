@@ -9,13 +9,8 @@ public class DebitcardManager
     DataBaseConnections db = new(); /// S?
     InputManager error = new();
     DateTime localDate = DateTime.Now;
-
-
     int numberOfPinAttempts = 0;
-    // public void CountUsers()
-    // {
-    //     var numberOfUsers = db.connection.QuerySingle<Debitcard>("SELECT COUNT(ID) FROM debitcard;");
-    // }
+
     public Debitcard GetCustomerInfo(int cardId)
     {
         var searchCustomerInfo = db.connection.Query<Debitcard>($"SELECT d.card_number AS CardNumber, d.bank_name AS BankName, d.expiration_date AS ExpirationDate, d.cvc_number AS CvcNumber, d.pin_number AS PinNumber, d.account_id AS AccountId, c.name FROM debitcard d INNER JOIN customer c ON d.customer_id = c.ID WHERE d.ID ='{cardId}'");
@@ -70,8 +65,8 @@ public class DebitcardManager
         if (localDate > insertedDebitCard.ExpirationDate)
         {
             Console.Clear();
-            error.ErrorMessage("Your card has expired. Please contact your bank for more information. Take your card and cut it.");
-            Thread.Sleep(5000);
+            error.ErrorMessage("YOUR CARD HAS EXPIRED. PLEASE CONTACT YOUR BANK FOR MORE INFORMATION. \nPRESS ANY KEY TO EXIT");
+            Console.ReadLine();
             Environment.Exit(0);
         }
     }

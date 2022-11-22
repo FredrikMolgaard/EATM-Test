@@ -7,6 +7,7 @@ internal class Program
 {
     private static void Main(string[] args)
     {
+        Console.Title =("E-ATM");
         DebitcardManager customerInfo = new();
         AccountManager accountManager = new();
         InputManager inputManager = new();
@@ -22,8 +23,8 @@ internal class Program
         Console.WriteLine("                                    |  5           |");
         Console.WriteLine("                                    [______________]\n\n");
         Console.WriteLine("_____________________________________________________________________________________________________\n");
-        Console.WriteLine("       __  __           _                             _          _    ___________ ___ ");
-        Console.WriteLine("       |  V |  __ _ ___| |_ ___ _ __ ___ __ _ _ __ __| |        | |  / /  _/ ___//   |");
+        Console.WriteLine("        __  __           _                             _         _    ___________ ___ ");
+        Console.WriteLine("       |  V | | __ _ ___| |_ ___ _ __ ___ __ _ _ __ __| |       | |  / /  _/ ___//   |");
         Console.WriteLine("       | |V | |/ _` / __| __/ _ | '__/ __/ _` | '__/ _` |       | | / // / |__ |/ /| |");
         Console.WriteLine("       | |  | | (_| |__ | ||  __/ | | (_| (_| | | | (_| |       | |/ // / ___/ / ___ |");
         Console.WriteLine("       |_|  |_||__,_|___/|__|__|_|  |___|_,_|_| | | |__,_|      |___/___//____/_/  |_|");
@@ -34,7 +35,7 @@ internal class Program
         Console.WriteLine($"     ENTER ID TO PROCEED: ");  // Tar in ett kort (samma som Id) och skriver ut "cardCount" för att visa 
         int cardId = inputManager.InputError(1, cardCount, "DEBIT CARD IS NOT VALID");  // Stoppar användaren från att skriva in ett id som inte finns i databasen.
         Debitcard cardInfo = customerInfo.GetCustomerInfo(cardId);  // Skickar in det sökta värdet för att ta ut all information om kund och bankkort som vi behöver.
-        // customerInfo.CheckDate(); // kollar så datumet på kortet inte har gått ut. 
+        customerInfo.CheckDate(); // kollar så datumet på kortet inte har gått ut. 
 
         bool pinValidated = false;
         while (pinValidated == false)
