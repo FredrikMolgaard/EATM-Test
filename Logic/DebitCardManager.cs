@@ -6,9 +6,8 @@ using MySqlConnector;
 public class DebitcardManager
 {
     Debitcard? insertedDebitCard;
-    DataBaseConnections db = new(); /// S?
+    DataBaseConnections db = new();
     InputManager error = new();
-    DateTime localDate = DateTime.Now;
     int numberOfPinAttempts = 0;
 
     public Debitcard GetCustomerInfo(int cardId)
@@ -33,7 +32,7 @@ public class DebitcardManager
         return numberOfCards;
     }
 
-    public bool CheckPin(int enterPin) // används bara vid inlogg. S
+    public bool CheckPin(int enterPin) // används bara vid inlogg. 
     {
         numberOfPinAttempts++;
         if (enterPin == insertedDebitCard.PinNumber)
@@ -60,9 +59,9 @@ public class DebitcardManager
         card_number = $"{string.Concat(Enumerable.Repeat("*", 10))}{card_number.Substring(10)}";
         return card_number;
     }
-    public void CheckDate()
-    {
-        if (localDate > insertedDebitCard.ExpirationDate)
+    public void CheckCardDate()
+    {   
+        if (DateTime.Now > insertedDebitCard.ExpirationDate)
         {
             Console.Clear();
             error.ErrorMessage("YOUR CARD HAS EXPIRED. PLEASE CONTACT YOUR BANK FOR MORE INFORMATION. \nPRESS ANY KEY TO EXIT");

@@ -11,6 +11,7 @@ internal class Program
         DebitcardManager customerInfo = new();
         AccountManager accountManager = new();
         InputManager inputManager = new();
+        TransactionsManager transactionsManager = new();
 
         int cardCount = customerInfo.GetAmountOfDebitcards();  //Tar reda på hur många "kort" det finns i databasen.
         Console.WriteLine("                               [PLEASE YOUR INSERT CARD*]\n");
@@ -35,7 +36,7 @@ internal class Program
         Console.WriteLine($"     ENTER ID TO PROCEED: ");  // Tar in ett kort (samma som Id) och skriver ut "cardCount" för att visa 
         int cardId = inputManager.InputError(1, cardCount, "DEBIT CARD IS NOT VALID");  // Stoppar användaren från att skriva in ett id som inte finns i databasen.
         Debitcard cardInfo = customerInfo.GetCustomerInfo(cardId);  // Skickar in det sökta värdet för att ta ut all information om kund och bankkort som vi behöver.
-        customerInfo.CheckDate(); // kollar så datumet på kortet inte har gått ut. 
+        customerInfo.CheckCardDate(); // kollar så datumet på kortet inte har gått ut. 
 
         bool pinValidated = false;
         while (pinValidated == false)
@@ -90,14 +91,15 @@ internal class Program
                 Console.WriteLine("PRESS ANY BUTTON TO RETURN");
                 Console.ReadLine();
             }
-            if (menuKey == ConsoleKey.D2)
+            else if (menuKey == ConsoleKey.D2)
             {
                 Console.Clear();
                 Console.WriteLine(" ________________________________________");
                 Console.WriteLine("PLEASE SELECT AMOUNT ");
                 Console.WriteLine("[1]-[100SEK]                    [200SEK][2]-\n\n[3]-[500SEK]                    [1000SEK]-[4]\n[5]ENTER AMOUNT");
                 int cashChoice = inputManager.InputError(1, 5, "     WRONG INPUT. PLEASE CHOOSE BETWEEN OPTION 1-5");
-                accountManager.CurrenciesMenu(cashChoice);
+                if (accountManager.CurrenciesMenu(cashChoice) == true)
+                {
                 Console.WriteLine("     PLEASE WAIT. COUNTING CASH...");
                 Thread.Sleep(5000);
                 Console.Beep();
@@ -110,21 +112,22 @@ internal class Program
                 Console.WriteLine("     THANK YOU FOR USING E-ATM. WELCOME BACK");
                 Thread.Sleep(3000);
                 Environment.Exit(0);
+                }
             }
-            if (menuKey == ConsoleKey.D3)
+            else if (menuKey == ConsoleKey.D3)
             {
                 Console.Clear();
                 int currentBalance = accountManager.GetBalance();
                 Console.WriteLine("                CASH RECEIPT\n\nCARD NO                    " + cardNumberCensored);
                 Console.WriteLine("AVAILABLE BALANCE                     " + currentBalance + "\n");
-                foreach (Transaction t in accountManager.GetTransactions(cardId))
+                foreach (Transaction t in transactionsManager.GetTransactions(cardId))
                 {
                     Console.WriteLine(t.Date + "                 " + t.Withdraw + "SEK");
                 }
                 Console.WriteLine("     PRESS ANY KEY TO RETURN");
                 Console.ReadLine();
             }
-            if (menuKey == ConsoleKey.D4)
+            else if (menuKey == ConsoleKey.D4)
             {
                 Console.Clear();
                 Console.WriteLine("     THANK YOU.\n\nPLEASE TAKE YOUR CARD");

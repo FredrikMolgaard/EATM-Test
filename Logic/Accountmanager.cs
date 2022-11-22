@@ -28,21 +28,14 @@ public class AccountManager
         var cashWithdrawal = db.connection.Query<Account>($"UPDATE account SET balance = '{myBalance - cashWithdraw}' WHERE ID ='{activeAccount.ID}'");
         transactionsManager.InsertTransactions(cashWithdraw, activeAccount.ID);
     }
-    public void CurrenciesMenu(int cashChoice)
+    public bool CurrenciesMenu(int cashChoice)
     {
         int myBalance = GetBalance();
         if (myBalance <= 0)
         {
-            inputManager.ErrorMessage("INSUFFICIENT FUNDS. PLEASE TAKE YOUR CARD...");
-            Thread.Sleep(3000);
-            Environment.Exit(0);
-        }
-
-        if (myBalance <= 0)
-        {
-            inputManager.ErrorMessage("INSUFFICIENT FUNDS. PLEASE TAKE YOUR CARD...");
-            Thread.Sleep(3000);
-            Environment.Exit(0);
+            inputManager.ErrorMessage("INSUFFICIENT FUNDS. RETURNING TO MENU...");
+            Thread.Sleep(2000);
+            return false;
         }
         switch (cashChoice)
         {
@@ -62,10 +55,6 @@ public class AccountManager
                 Withdraw(inputManager.InputError(100, 5000, "INVALID WITHDRAWAL AMOUNT. AMOUNT MUST BE BETWEEN 100SEK - 5000SEK"));
                 break;
         }
-    }
-
-    public IEnumerable<Transaction> GetTransactions(int account_id)
-    {
-        return transactionsManager.GetTransactions(account_id);
+        return true;
     }
 }
