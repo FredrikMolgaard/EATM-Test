@@ -19,7 +19,7 @@ internal class Program
         while (pinValidated == false)
         {
             Console.WriteLine("ENTER 4-DIGIT PIN");
-            int checkPin = Convert.ToInt32(Console.ReadLine());
+            int checkPin = inputManager.InputError(0000, 9999, "PIN MUST BE A 4-DIGIT NUMBER");
             pinValidated = customerInfo.CheckPin(checkPin);
 
             Console.WriteLine("WRONG PIN");
