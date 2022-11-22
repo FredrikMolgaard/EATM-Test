@@ -3,7 +3,7 @@ using MySqlConnector;
 public class TransactionsManager
 {
     DataBaseConnections db = new();
-    public void insertTransactions(int withdraw, int account_id)
+    public void InsertTransactions(int withdraw, int account_id)
     {
         DateTime localDate = DateTime.Now;
         var insertTransactions = db.connection.Query<Transaction>($"INSERT INTO transactions (withdraw, date, account_id) VALUES ('{withdraw}', '{localDate}', '{account_id}')");
