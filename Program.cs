@@ -1,6 +1,8 @@
 ﻿using Dapper;
 using MySqlConnector;
 
+
+
 internal class Program
 {
     private static void Main(string[] args)
@@ -90,6 +92,7 @@ internal class Program
             if (menuKey == ConsoleKey.D2)
             {
                 Console.Clear();
+                Console.WriteLine(" ________________________________________");
                 Console.WriteLine("PLEASE SELECT AMOUNT ");
                 Console.WriteLine("[1]-[100SEK]                    [200SEK][2]-\n\n[3]-[500SEK]                    [1000SEK]-[4]\n[5]ENTER AMOUNT");
                 int cashChoice = inputManager.InputError(1, 5, "     WRONG INPUT. PLEASE CHOOSE BETWEEN OPTION 1-5");

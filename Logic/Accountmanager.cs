@@ -21,6 +21,7 @@ public class AccountManager
         return balanceResult;
     }
 
+
     public void Withdraw(int cashWithdraw)
     {
         int myBalance = GetBalance();
@@ -30,6 +31,12 @@ public class AccountManager
     public void CurrenciesMenu(int cashChoice)
     {
         int myBalance = GetBalance();
+        if (myBalance <= 0)
+        {
+            inputManager.ErrorMessage("INSUFFICIENT FUNDS. PLEASE TAKE YOUR CARD...");
+            Thread.Sleep(3000);
+            Environment.Exit(0);
+        }
 
         if (myBalance <= 0)
         {
@@ -61,7 +68,4 @@ public class AccountManager
     {
         return transactionsManager.GetTransactions(account_id);
     }
-
-
-
 }
