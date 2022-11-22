@@ -48,7 +48,6 @@ public class DebitcardManager
             return false;
         }
     }
-
     public bool NumberOfMaxPinAttemptsReached()
     {
         if (numberOfPinAttempts >= 4)
@@ -68,12 +67,8 @@ public class DebitcardManager
     {
         if (localDate > insertedDebitCard.ExpirationDate)
         {
-            Console.WriteLine("hej");
+            Console.WriteLine("YOUR CARD HAS EXPIRED. PLEASE CONTACT YOUR BANK FOR MORE INFORMATION.");
             Environment.Exit(0);
-        }
-        else
-        {
-            System.Console.WriteLine("hejdå");
         }
     }
 
