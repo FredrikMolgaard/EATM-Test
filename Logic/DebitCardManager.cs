@@ -2,10 +2,12 @@ using Dapper;
 using MySqlConnector;
 
 
+
 public class DebitcardManager
 {
     Debitcard? insertedDebitCard;
     DataBaseConnections db = new(); /// S?
+    InputManager error = new();
     DateTime localDate = DateTime.Now;
 
 
@@ -67,7 +69,9 @@ public class DebitcardManager
     {
         if (localDate > insertedDebitCard.ExpirationDate)
         {
-            Console.WriteLine("YOUR CARD HAS EXPIRED. PLEASE CONTACT YOUR BANK FOR MORE INFORMATION.");
+            Console.Clear();
+            error.ErrorMessage("Your card has expired. Please contact your bank for more information. Take your card and cut it.");
+            Thread.Sleep(5000);
             Environment.Exit(0);
         }
     }
