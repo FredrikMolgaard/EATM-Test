@@ -7,7 +7,7 @@ public class DebitcardManager
     Debitcard? insertedDebitCard;
     DataBaseConnections db = new(); /// S?
     DateTime localDate = DateTime.Now;
-    
+
 
     int numberOfPinAttempts = 0;
     // public void CountUsers()
@@ -75,5 +75,13 @@ public class DebitcardManager
         {
             System.Console.WriteLine("hejdå");
         }
+    }
+
+    public string ShortenDateTime(DateTime ExpirationDate)
+    {
+        string ExpirationDateLong = ExpirationDate.ToString();
+        char[] Shorten = { '0', ':', '0', ':', '0' };
+        string ExpirationDateShort = ExpirationDateLong.TrimEnd(Shorten);
+        return ExpirationDateShort;
     }
 }

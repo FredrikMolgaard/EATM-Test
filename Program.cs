@@ -31,20 +31,23 @@ internal class Program
         }
 
         Console.Clear();
+        string ExpirationDateShort = customerInfo.ShortenDateTime(cardInfo.ExpirationDate);
         string cardNumberCensored = Convert.ToString(cardInfo.CardNumber);
         cardNumberCensored = customerInfo.CensoreDebitCard(cardNumberCensored);
         Console.WriteLine($" ________________________________________");
-        Console.WriteLine($"|                               {cardInfo.BankName}   ");
+        Console.WriteLine($"|                        {cardInfo.BankName}   ");
         Console.WriteLine($"|  {cardNumberCensored}                                   ");
         Console.WriteLine($"|                                        ");
         Console.WriteLine($"|  [##]>>))                              ");
         Console.WriteLine($"|            Exp Date        CVC         ");
-        Console.WriteLine($"|              {cardInfo.ExpirationDate}          {cardInfo.CvcNumber}         ");
+        Console.WriteLine($"|           {ExpirationDateShort}      {cardInfo.CvcNumber}         ");
         Console.WriteLine($"|                                        ");
         Console.WriteLine($"| {cardInfo.Name}                       ");
         Console.WriteLine($"|_________________________________________\n\n");
         Console.WriteLine($"             WELCOME {cardInfo.Name}\n\n");
         Console.WriteLine("_________________________________________________________\n");
+        Console.WriteLine("PRESS ANY KEY TO CONTINUE");
+        Console.ReadLine();
 
         bool menu = true;
         while (menu == true)
@@ -52,7 +55,7 @@ internal class Program
             Console.Clear();
             // Läs ut Account för det isatta debitcard
             accountManager.SetActiveAccount(cardId);
-            
+
             Console.WriteLine("[1] - SHOW BALANCE                    CASH WITHDRAWAL - [2]\n[3] - TRANSACTION HISTORY                       EXIT - [4]");
             ConsoleKey menuKey = Console.ReadKey().Key;
 
@@ -60,7 +63,7 @@ internal class Program
             {
                 Console.Clear();
                 int currentBalance = accountManager.GetBalance();
-                Console.WriteLine("Current Balance: " + currentBalance);
+                Console.WriteLine("CURRENT BALANCE: " + currentBalance + "SEK");
                 Thread.Sleep(3000);
             }
             if (menuKey == ConsoleKey.D2)
@@ -88,10 +91,10 @@ internal class Program
                 Console.Clear();
                 int currentBalance = accountManager.GetBalance();
                 Console.WriteLine("                CASH RECEIPT\n\nCARD NO                    " + cardNumberCensored);
-                Console.WriteLine("AVAILABLE BALANCE                     " + currentBalance);
+                Console.WriteLine("AVAILABLE BALANCE                     " + currentBalance + "\n");
                 foreach (Transaction t in accountManager.GetTransactions(cardId))
                 {
-                    Console.WriteLine("\n" + t.Date + "                 " + t.Withdraw + "SEK");   // <----Returner inte rätt värden.
+                    Console.WriteLine(t.Date + "                 " + t.Withdraw + "SEK");
                 }
                 Console.ReadLine();
             }
