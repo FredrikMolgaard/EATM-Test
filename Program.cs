@@ -7,7 +7,7 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        Console.Title =("E-ATM");
+        Console.Title = ("E-ATM");
         DebitcardManager customerInfo = new();
         AccountManager accountManager = new();
         InputManager inputManager = new();
@@ -94,24 +94,25 @@ internal class Program
             else if (menuKey == ConsoleKey.D2)
             {
                 Console.Clear();
-                Console.WriteLine(" ________________________________________");
-                Console.WriteLine("PLEASE SELECT AMOUNT ");
-                Console.WriteLine("[1]-[100SEK]                    [200SEK][2]-\n\n[3]-[500SEK]                    [1000SEK]-[4]\n[5]ENTER AMOUNT");
+                Console.WriteLine("_____________________________________________\n");
+                Console.WriteLine("  PLEASE SELECT AMOUNT AND PRESS ANY KEY\n");
+                Console.WriteLine("[1]-[100SEK]                    [200SEK][2]-\n\n[3]-[500SEK]                    [1000SEK]-[4]\n\n[5]ENTER AMOUNT");
                 int cashChoice = inputManager.InputError(1, 5, "     WRONG INPUT. PLEASE CHOOSE BETWEEN OPTION 1-5");
                 if (accountManager.CurrenciesMenu(cashChoice) == true)
                 {
-                Console.WriteLine("     PLEASE WAIT. COUNTING CASH...");
-                Thread.Sleep(5000);
-                Console.Beep();
-                Console.WriteLine("     PLEASE TAKE YOUR CARD (PRESS ANY KEY)");
-                Console.ReadLine();
-                Console.Clear();
-                Console.WriteLine("     PLEASE COLLECT YOUR MONEY (PRESS ANY KEY)");
-                Console.ReadLine();
-                Console.Clear();
-                Console.WriteLine("     THANK YOU FOR USING E-ATM. WELCOME BACK");
-                Thread.Sleep(3000);
-                Environment.Exit(0);
+                    Console.Clear();
+                    Console.WriteLine("     PLEASE WAIT. COUNTING CASH...");
+                    Thread.Sleep(5000);
+                    Console.Beep();
+                    Console.WriteLine("     PLEASE TAKE YOUR CARD (PRESS ANY KEY)");
+                    Console.ReadLine();
+                    Console.Clear();
+                    Console.WriteLine("     PLEASE COLLECT YOUR MONEY (PRESS ANY KEY)");
+                    Console.ReadLine();
+                    Console.Clear();
+                    Console.WriteLine("     THANK YOU FOR USING E-ATM. WELCOME BACK");
+                    Thread.Sleep(3000);
+                    Environment.Exit(0);
                 }
             }
             else if (menuKey == ConsoleKey.D3)

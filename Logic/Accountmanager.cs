@@ -34,7 +34,7 @@ public class AccountManager
         if (myBalance <= 0)
         {
             inputManager.ErrorMessage("INSUFFICIENT FUNDS. RETURNING TO MENU...");
-            Thread.Sleep(2000);
+            Thread.Sleep(3000);
             return false;
         }
         switch (cashChoice)
